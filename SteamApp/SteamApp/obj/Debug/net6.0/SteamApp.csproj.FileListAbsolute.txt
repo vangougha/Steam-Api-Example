@@ -1,0 +1,17 @@
+C:\Users\Can\Desktop\SteamApp\SteamApp\bin\Debug\net6.0\SteamApp.exe
+C:\Users\Can\Desktop\SteamApp\SteamApp\bin\Debug\net6.0\SteamApp.deps.json
+C:\Users\Can\Desktop\SteamApp\SteamApp\bin\Debug\net6.0\SteamApp.runtimeconfig.json
+C:\Users\Can\Desktop\SteamApp\SteamApp\bin\Debug\net6.0\SteamApp.dll
+C:\Users\Can\Desktop\SteamApp\SteamApp\bin\Debug\net6.0\SteamApp.pdb
+C:\Users\Can\Desktop\SteamApp\SteamApp\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.csproj.AssemblyReference.cache
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.AssemblyInfoInputs.cache
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.AssemblyInfo.cs
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.csproj.CoreCompileInputs.cache
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.csproj.CopyComplete
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.dll
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\refint\SteamApp.dll
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.pdb
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\SteamApp.genruntimeconfig.cache
+C:\Users\Can\Desktop\SteamApp\SteamApp\obj\Debug\net6.0\ref\SteamApp.dll
