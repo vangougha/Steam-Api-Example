@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N+06pVxKr+B62ZQreUyumo1rfjy2iGIsSc7TAbeysExralMno+Ot5Nuz4+AQu3wB2ywz3JollJIpyDuE1Ne8iQ==",
+  "dgSpecHash": "39mT3YLQqFF5ts3QIi/Jcp/iFz4qowGy1G8jCvtkyY5gBH2R6EXrVh4CZqGN7glCjCylkHzegIB9MKdM8CiW6A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Can\\Desktop\\SteamApp\\SteamApp\\SteamApp.csproj",
+  "projectFilePath": "C:\\Users\\Can\\Desktop\\Kod\\SteamApp\\SteamApp\\SteamApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Can\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.1\\microsoft.netcore.platforms.1.1.1.nupkg.sha512",
     "C:\\Users\\Can\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",

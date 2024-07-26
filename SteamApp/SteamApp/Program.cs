@@ -1,10 +1,34 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace SteamApiConsoleApp
 {
+    public class FriendListResponse
+    {
+        [JsonProperty("friendslist")]
+        public FriendsList FriendsList { get; set; }
+    }
+
+    public class FriendsList
+    {
+        [JsonProperty("friends")]
+        public List<Friend> Friends { get; set; }
+    }
+
+    public class Friend
+    {
+        [JsonProperty("steamid")]
+        public string SteamId { get; set; }
+
+        [JsonProperty("relationship")]
+        public string Relationship { get; set; }
+
+        [JsonProperty("friend_since")]
+        public long FriendSince { get; set; }
+    }
     class Program
     {
         /*
@@ -12,7 +36,7 @@ namespace SteamApiConsoleApp
         Steam User ID Example : 76561199161083869
 
         Steam Game ID Example : 341940
-
+ 
         */
         private static readonly string apiKey = "2EDCB9C589BAC36AEEA34FC390F24E0E";
         private static readonly string baseUrl = "http://api.steampowered.com/";
@@ -25,6 +49,16 @@ namespace SteamApiConsoleApp
 
             Console.WriteLine("Please enter user Steam id : ");
             string steamId = Console.ReadLine();
+
+            string json = await GetFriendList(steamId);
+
+            FriendListResponse friendListResponse = JsonConvert.DeserializeObject<FriendListResponse>(json);
+
+            foreach (var friend in friendListResponse.FriendsList.Friends)
+            {
+                Console.WriteLine($"Steam ID: {friend.SteamId}, Relationship: {friend.Relationship}, Friend Since: {friend.FriendSince}");
+            }
+
 
             GetOwnedGamesAsync(steamId, gameId);
             var ownedGames = await GetOwnedGamesAsync(steamId, gameId);
@@ -48,7 +82,18 @@ namespace SteamApiConsoleApp
                 Console.WriteLine("Failed to retrieve player achievements.");
             }
         }
+        private static async Task<string> GetFriendList(string steamId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = $"{baseUrl}/ISteamUser/GetFriendList/v0001/?key={apiKey}&steamid={steamId}&relationship=friend";
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
 
+                return responseBody;
+            }
+        }
         private static async Task<string> GetGameInfoTestAsync(string gameId)
         {
             using (HttpClient client = new HttpClient())
@@ -62,7 +107,10 @@ namespace SteamApiConsoleApp
                 JObject json = JObject.Parse(responseBody);
 
                 return json.ToString();
-                // Json dosyasında cok bi sey yok sadece oyunda kac kisi var falan onu gosteriyor 
+                // **Json dosyasında cok bi sey yok sadece oyunda kac kisi var falan onu gosteriyor **
+                //Dökümanda bununla alakalı başka şeyler de olması lazım, kontrol edip ona göre ekleme yapabilirim 
+
+
             }
         }
 
@@ -76,7 +124,6 @@ namespace SteamApiConsoleApp
                 string responseBody = await response.Content.ReadAsStringAsync();
                 JObject json = JObject.Parse(responseBody);
 
-                // Oyunların listesine erişim
                 JArray games = (JArray)json["response"]["games"];
                 if (games != null)
                 {
@@ -109,35 +156,37 @@ namespace SteamApiConsoleApp
             }
             catch (HttpRequestException e)
             {
-                // Log the exception or handle it as needed
                 Console.WriteLine($"Request error: {e.Message}");
                 return null;
             }
             catch (Exception e)
             {
-                // Log the exception or handle it as needed
                 Console.WriteLine($"Unexpected error: {e.Message}");
                 return null;
             }
         }
-        //JSON parçalama kısımlarını chat gpt yaptı bunu öğrenmem lazım
+    
         private static async Task<string> GetUserInfoAsync(string steamId)
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = $"{baseUrl}ISteamUser/GetPlayerSummaries/v2/?key={apiKey}&steamids={steamId}";
 
+                string url = $"{baseUrl}ISteamUser/GetPlayerSummaries/v2/?key={apiKey}&steamids={steamId}";
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
-
                 string responseBody = await response.Content.ReadAsStringAsync();
                 JObject json = JObject.Parse(responseBody);
                 JObject player = (JObject)json["response"]["players"][0];
                 string personaName = player["personaname"].ToString();
                 string profileUrl = player["profileurl"].ToString();
                 string avatarUrl = player["avatar"].ToString();
+                string steamID = player["steamid"].ToString();
+                var profileState = player["profilestate"].ToString();
+                var commentPermission = player["commentpermission"].ToString();
+                var primaryClanId = player["primaryclanid"].ToString();
+                var timeCreated = player["timecreated"].ToString();
 
-                return $"Kullanıcı Adı: {personaName}\nProfil URL: {profileUrl}\nAvatar URL: {avatarUrl}";
+                return $"Username : {personaName}\nProfil URL: {profileUrl}\nAvatar URL: {avatarUrl} \n Steam ID {steamID}\n , Profile State : {profileState} \n Comment Permission : {commentPermission}\n,Time Created : {timeCreated}\n, Primary Clan ID : {primaryClanId}\n ";
             }
         }
 
@@ -150,7 +199,9 @@ namespace SteamApiConsoleApp
             for (int i = 0; i < achievementsArray.Count; i++)
             {
                 JObject achievement = (JObject)achievementsArray[i];
-                string name = achievement["apiname"].ToString();
+                string apiname = achievement["apiname"].ToString();
+                string description = achievement["achievement"].ToString();
+                string name = achievement["name"].ToString();
                 bool achieved = achievement["achieved"].ToString() == "1";
                 DateTime unlockTime = DateTimeOffset.FromUnixTimeSeconds((long)achievement["unlocktime"]).DateTime;
 
@@ -179,13 +230,11 @@ namespace SteamApiConsoleApp
             }
             catch (HttpRequestException e)
             {
-                // Log the exception or handle it as needed
                 Console.WriteLine($"Request error: {e.Message}");
                 return null;
             }
             catch (Exception e)
             {
-                // Log the exception or handle it as needed
                 Console.WriteLine($"Unexpected error: {e.Message}");
                 return null;
             }
