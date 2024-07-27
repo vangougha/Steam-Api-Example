@@ -100,7 +100,6 @@ namespace SteamApiConsoleApp
                 string profileUrl = player["profileurl"].ToString();
                 string avatarUrl = player["avatar"].ToString();
                 string loccountrycode = player["loccountrycode"].ToString();
-
                 string steamID = player["steamid"].ToString();
                 var profileState = player["profilestate"].ToString();
                 var commentPermission = player["commentpermission"].ToString();
